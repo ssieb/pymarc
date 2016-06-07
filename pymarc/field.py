@@ -177,13 +177,11 @@ class Field(Iterator):
 
         If no subfield is found with the specified code None is returned.
         """
-        try:
-            index = self.subfields.index(code)
-            value = self.subfields.pop(index + 1)
-            self.subfields.pop(index)
-            return value
-        except ValueError:
-            return None
+        for index in range(0, len(self.subfields), 2):
+            if self.subfields[index] == code:
+                self.subfields.pop(index)
+                return self.subfields.pop(index)
+        return None
 
     def is_control_field(self):
         """
